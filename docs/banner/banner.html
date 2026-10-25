@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!-- The Competition 01 banner for the README: a short strip, 1200 by 420, linking to the
+     challenge page. linkedin.html is the taller cut of the same banner. render.py fills the
+     {{...}} slots with the fonts and images and renders both at twice their size. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: "Inter"; font-weight: 100 900; src: url({{INTER}}) format("woff2"); }
+  @font-face { font-family: "JetBrains Mono"; font-weight: 100 800; src: url({{MONO}}) format("woff2"); }
+  :root {
+    --ink: #16241b;
+    --text: #eef1ec;
+    --muted: #a9b3ab;
+    --green: #22c55e;
+    --green-soft: #7ee787;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1200px; height: 420px; overflow: hidden; }
+  body {
+    background-color: var(--ink);
+    background-image:
+      linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px),
+      linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px);
+    background-size: 28px 28px;
+    font-family: "Inter", sans-serif;
+    color: var(--text);
+    position: relative;
+  }
+  .left { position: absolute; left: 60px; top: 40px; width: 680px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand img { width: 40px; height: 40px; }
+  .brand .name { font-size: 21px; font-weight: 700; line-height: 1.1; }
+  .brand .line { font-size: 13px; color: var(--muted); margin-top: 1px; }
+  .kicker {
+    margin-top: 30px;
+    font-family: "JetBrains Mono", monospace; font-size: 15px; font-weight: 600;
+    letter-spacing: 0.22em; color: var(--green-soft);
+  }
+  h1 { margin-top: 8px; font-size: 54px; font-weight: 800; line-height: 1.04; letter-spacing: -0.02em; }
+  h1 .accent { color: var(--green); }
+  .tagline { margin-top: 16px; font-size: 21px; font-weight: 500; color: var(--text); }
+  .cta { position: absolute; left: 60px; bottom: 40px; display: flex; align-items: center; gap: 18px; }
+  .cta .button {
+    background: var(--green); color: #ffffff; font-size: 18px; font-weight: 700;
+    padding: 11px 20px; border-radius: 8px; box-shadow: 4px 4px 0 rgba(0,0,0,0.45);
+  }
+  .cta .url { font-family: "JetBrains Mono", monospace; font-size: 16px; color: var(--muted); }
+  .chip { position: absolute; right: 60px; top: 40px; height: 340px; }
+  .chip img {
+    display: block; height: 340px; width: auto;
+    border: 2px solid rgba(255,255,255,0.22); border-radius: 6px;
+    box-shadow: 8px 8px 0 rgba(0,0,0,0.5);
+  }
+  .chip .label {
+    position: absolute; left: 12px; bottom: 12px;
+    font-family: "JetBrains Mono", monospace; font-size: 13px; color: var(--muted);
+    background: rgba(22,36,27,0.88); border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 5px; padding: 5px 9px;
+  }
+  .chip .label b { color: var(--text); font-weight: 600; }
+</style>
+</head>
+<body>
+  <div class="left">
+    <div class="brand">
+      <img src="{{WAFER}}" alt="">
+      <div>
+        <div class="name">Chipbase</div>
+        <div class="line">Learn physical design for free</div>
+      </div>
+    </div>
+    <div class="kicker">COMPETITION 01</div>
+    <h1>Systolic Array<br><span class="accent">AI Accelerator</span></h1>
+    <p class="tagline">Partition, place, and route Gemmini however you like.</p>
+  </div>
+  <div class="cta">
+    <span class="button">Enter the challenge →</span>
+    <span class="url">samcooper01.github.io/chipbase/challenges</span>
+  </div>
+  <div class="chip">
+    <img src="{{CHIP}}" alt="">
+    <div class="label">reference layout · score to beat <b>1.000</b></div>
+  </div>
+</body>
+</html>

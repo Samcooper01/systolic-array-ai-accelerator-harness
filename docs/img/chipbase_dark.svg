@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 72" width="340" height="72">
+  <!-- Chipbase wordmark (dark theme): the wafer logo from the site header, then the name and the line under it -->
+  <g transform="translate(4 4)">
+        <defs><clipPath id="wafer"><circle cx="32" cy="32" r="27"/></clipPath></defs>
+        <circle cx="32" cy="32" r="27" fill="#ffffff" stroke="#1a1d26" stroke-width="3"/>
+        <g clip-path="url(#wafer)" fill="none" stroke="#1a1d26" stroke-width="1.2" stroke-opacity="0.55">
+          <rect x="7" y="7" width="7" height="7" rx="0.8"/>
+          <rect x="7" y="15.5" width="7" height="7" rx="0.8"/>
+          <rect x="7" y="24" width="7" height="7" rx="0.8"/>
+          <rect x="7" y="32.5" width="7" height="7" rx="0.8"/>
+          <rect x="7" y="41" width="7" height="7" rx="0.8"/>
+          <rect x="7" y="49.5" width="7" height="7" rx="0.8"/>
+          <rect x="15.5" y="7" width="7" height="7" rx="0.8"/>
+          <rect x="15.5" y="15.5" width="7" height="7" rx="0.8"/>
+          <rect x="15.5" y="24" width="7" height="7" rx="0.8"/>
+          <rect x="15.5" y="32.5" width="7" height="7" rx="0.8"/>
+          <rect x="15.5" y="41" width="7" height="7" rx="0.8"/>
+          <rect x="15.5" y="49.5" width="7" height="7" rx="0.8"/>
+          <rect x="24" y="7" width="7" height="7" rx="0.8"/>
+          <rect x="24" y="15.5" width="7" height="7" rx="0.8"/>
+          <rect x="24" y="24" width="7" height="7" rx="0.8"/>
+          <rect x="24" y="32.5" width="7" height="7" rx="0.8"/>
+          <rect x="24" y="41" width="7" height="7" rx="0.8"/>
+          <rect x="24" y="49.5" width="7" height="7" rx="0.8"/>
+          <rect x="32.5" y="7" width="7" height="7" rx="0.8"/>
+          <rect x="32.5" y="15.5" width="7" height="7" rx="0.8"/>
+          <rect x="32.5" y="24" width="7" height="7" rx="0.8" fill="#16a34a" stroke="none"/>
+          <rect x="32.5" y="32.5" width="7" height="7" rx="0.8"/>
+          <rect x="32.5" y="41" width="7" height="7" rx="0.8"/>
+          <rect x="32.5" y="49.5" width="7" height="7" rx="0.8"/>
+          <rect x="41" y="7" width="7" height="7" rx="0.8"/>
+          <rect x="41" y="15.5" width="7" height="7" rx="0.8"/>
+          <rect x="41" y="24" width="7" height="7" rx="0.8"/>
+          <rect x="41" y="32.5" width="7" height="7" rx="0.8"/>
+          <rect x="41" y="41" width="7" height="7" rx="0.8"/>
+          <rect x="41" y="49.5" width="7" height="7" rx="0.8"/>
+          <rect x="49.5" y="7" width="7" height="7" rx="0.8"/>
+          <rect x="49.5" y="15.5" width="7" height="7" rx="0.8"/>
+          <rect x="49.5" y="24" width="7" height="7" rx="0.8"/>
+          <rect x="49.5" y="32.5" width="7" height="7" rx="0.8"/>
+          <rect x="49.5" y="41" width="7" height="7" rx="0.8"/>
+          <rect x="49.5" y="49.5" width="7" height="7" rx="0.8"/>
+        </g>
+        <path d="M24 57.5 H40" stroke="#ffffff" stroke-width="4"/>
+        <path d="M24 57 H40" stroke="#1a1d26" stroke-width="3"/>
+      
+  </g>
+  <text x="80" y="40" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="34" font-weight="700" fill="#e6e8ee">Chipbase</text>
+  <text x="81" y="62" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#9aa1b0">Learn physical design for free</text>
+</svg>

@@ -1,0 +1,11 @@
+# local ORFS checkout (fetched by setup.sh; pinned by versions.lock)
+/orfs
+/eval_work/
+/tools/
+# flow outputs
+/work/
+/baseline/
+/result/
+*.log
+__pycache__/
+/judge_work/

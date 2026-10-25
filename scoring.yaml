@@ -1,0 +1,48 @@
+# The judge. Gates are pass/fail. The cost weights and the reference values are fixed before the
+# competition opens and do not change once entries arrive; the evaluator refuses to score if any
+# of them is missing.
+
+gates:
+  equivalence:        required   # each block and the top against the evaluator's own pinned synthesis of the
+                                 # golden RTL (Register Transfer Level): black boxes and registers cut and
+                                 # paired, whole module proven by ABC; flow/eval/equiv.py
+  layout_vs_netlist:  required   # connectivity of the streamed layout against the netlist
+  drc_violations:     0          # shorts and via violations from the detailed router's rule check on every
+                                 # layout; other rule classes are reported, not gated (flow/eval/drc.py)
+  route_overflow:     0
+  placement_legal:    true
+  setup_wns_ps:       ">= 0"     # slow corner, at the declared clock, propagated clocks
+  hold_wns_ps:        ">= 0"     # fast corner
+  ir_drop_limit_mv:   110        # worst static IR drop on VDD or VSS. Reference: 84 mV VDD, 88 mV VSS
+                                 # (12.6% of 0.7 V), OpenROAD analyze_power_grid on the routed top;
+                                 # the limit is the reference plus 25%. Hot spot: spad/vsm logic.
+  compute_budget:                # measured along the hierarchy: each block and the top are timed on
+    hours: 12                    # their own; the gate is the longest dependency chain (block -> parent
+    threads: 16                  # block -> top), independent blocks run in parallel and do not add up
+    memory_gb: 64                # peak of any single run
+    measure: critical_path
+
+cost:
+  form: "FOM = (T_base/T_you)^a * (A_base/A_you)^b * (P_base/P_you)^g"
+  # T = declared clock period (must pass timing), A = die area, P = total power
+  power_basis: fixed_reference_clock   # P is measured at a fixed 1,000 ps clock, so a slower clock does not
+                                       # lower it: typical corner (TC), the pinned switching activity
+                                       # (design/activity/, the fixed workload on the golden RTL, matched
+                                       # to flip-flops by register name), top plus every block instance
+  # T is the declared period: the smallest period at which the finished layout passes setup at the
+  # slow corner (ASAP7 WC: SS libraries, 0.63 V, 100 C, blocks' slow timing models), in 5 ps steps
+  # (flow/time_at_period.tcl SEARCH=1 SETUP_ONLY=1 CORNER=WC); hold is checked at the fast corner
+  # (BC: FF, 0.77 V), the flow's default corner, at that period.
+  weights:                             # set up front (2026-10-22), no calibration; they sum to 1
+    a: 0.30                            # speed: won mostly by re-hardening blocks
+    b: 0.50                            # area: leads; the die is almost all blocks and memories, so its
+                                       # size comes down to how they are partitioned, shaped and packed
+    g: 0.20                            # power: the 73 block instances draw 88% of it, by logic the pinned
+                                       # synthesis fixes, so it moves least
+
+baseline:                              # the reference (config_tight2.mk), measured by the evaluator
+  T_base_ps:  6391                     # slow-corner setup, declared period
+  A_base_um2: 628065                   # die 821 x 765 um
+  P_base_w:   1.3455                   # top 0.1667 W + 73 block instances 1.1788 W
+  runtime_s:  18404                  # longest chain, LoopConv then top (5.11 h), measured in the pinned container
+  peak_mem_gb: 26.9                  # top-level detailed routing

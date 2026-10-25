@@ -1,0 +1,42 @@
+# Chipbase Competition 01 - pinned inputs and tools. Do not change these; the evaluator uses them.
+# Run inside the pinned container image: it carries ORFS built at orfs_commit with the tools below.
+
+# --- the flow and the process ---
+orfs_repo     = https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts
+orfs_commit   = bde10c79a2389ffe9c5d73445f177f81262059f9
+container     = openroad/orfs@sha256:6bc088ee563c76374f7ef5d0a3244d607a6162c8979f1815f92eef683c1169a4
+pdk           = asap7                      # vendored in ORFS at that commit (flow/platforms/asap7)
+openroad      = 26Q3-173-gf5df0085c2
+yosys         = 0.64 (the-openroad-project/yosys, git 8449dd470)
+eqy           = https://github.com/YosysHQ/eqy @ 7a92d8441aa442dd1b5543458d6f1060a8f85dd1 (built by setup.sh into tools/eqy)
+equivalence   = each submitted module against the evaluator's own pinned synthesis of it (flow/eval/eval_synth.mk), proven whole by ABC; the RTL-side check is informational
+sby           = https://github.com/YosysHQ/sby @ b1a1e98cba941ec8433f8dc27f416cd7bb7f14be (eqy's dependency)
+klayout       = 0.30.7
+
+# --- the design (fixed Verilog in design/rtl; the generator pins below say how it was made) ---
+design        = Gemmini, int8, 16x16 array as an 8x8 mesh of 2x2 tiles, has_training_convs = false, no TileLink monitors
+design_config = design/generator/ChipbaseConfigs.scala (class ChipbaseGemminiConfig)
+gemmini       = https://github.com/ucb-bar/gemmini @ 8c8b38b9dea3e4d6ba9695346a883b2094bd7388
+chipyard      = https://github.com/ucb-bar/chipyard @ ac58f38d77c99e9d1cafa64dfd6d4b00bdcd43e1 (1.11.0)
+firtool       = 1.61.0
+rtl_modules   = 120 generated modules + plusarg_reader stub (design/rtl/MODULES.txt)
+
+# --- memory macros ---
+fakeram2      = https://github.com/The-OpenROAD-Project/FakeRAM2.0 @ 8e6cd664f8d5f42ae684c8846a536f66c9d22ae8
+sram_macros   = mem_ext_phys (4096x128, x4), mem_0_bank_ext_phys (512x256, x4); see design/srams/README.md
+
+# --- power workload ---
+activity      = design/activity/chipbase_matmul_activity.tsv.gz (C = relu(scale*(A*B+D)), 128x128x128, 14,786 Gemmini cycles)
+workload_sim  = Chipyard Verilator (5.020) simulation of ChipbaseGemminiConfig running design/activity/chipbase_matmul.c
+
+# --- reference partition (entrants may partition differently) ---
+reference     = flow/gemmini/config_tight2.mk: ExecuteController and Scratchpad opened, hand floorplan, die 821 x 765 um
+blocks        = Tile (x64) AlwaysOutTransposer AccumulatorScale LoopConv LoopMatmul ReservationStation LoadController StoreController FrontendTLB CounterController
+layers        = blocks M2-M5 (Tile, transposer, AccumulatorScale) or M2-M7 (controllers); top M2-M9, power mesh M8/M9
+top           = Gemmini
+constraint_ps = 1000                        # the constraint file's clock; the reference declares 6391 ps (slow corner)
+
+# --- compute budget (a gate, enforced by the judge's container run) ---
+budget_hours  = 6
+threads       = 16
+memory_gb     = 64
